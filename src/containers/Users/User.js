@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 
 function fetchDataDeferred(getState, dispatch) {
   if (!isLoaded(getState())) {
-    console.log('LOAD');
+    //console.log('LOAD');
     return dispatch(loadUsers());
   }
 }
@@ -27,9 +27,9 @@ export default class User extends Component {
     users: PropTypes.array
   }
   render() {
-    console.log('Bravo');
+    //console.log('Bravo');
     const { users } = this.props;
-    console.log(this.props);
+    //console.log(this.props);
 
     // const styles = require('./User.scss');
 
