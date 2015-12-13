@@ -2,41 +2,45 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
+import * as loginActions from 'redux/modules/login';
 
 
 @connect(
     () => ({}),
-    dispatch => bindActionCreators({}, dispatch))
+    dispatch => bindActionCreators(loginActions, dispatch))
 @reduxForm({
   form: 'login',
-  fields: ['username', 'password']
+  fields: ['email', 'password']
 })
 export default class LoginForm extends Component {
   static propTypes = {
+    loginEmailPass: PropTypes.func.isRequired,
     fields: PropTypes.object.isRequired
   };
+
 
   handleSubmit = (event) => {
     event.preventDefault();
   };
 
   render() {
+    const {fields: {email, password}, loginEmailPass} = this.props;
     // const styles = require('./LoginForm.scss');
     return (
       <form role="form" onSubmit={this.handleSubmit}>
           <div className="form-group">
             <label htmlFor="email">e-mail:</label>
-            <input type="text" className="form-control" id="email" />
+            <input type="text" className="form-control" id="email" {...email} />
           </div>
           <div className="form-group">
             <label htmlFor="password">password:</label>
-            <input type="text" className="form-control" id="password" />
+            <input type="password" className="form-control" id="password" {...password} />
           </div>
-          <button className="btn btn-default">Login</button>
-          <button className="btn btn-default" >
+          <button type="button" className="btn btn-default" onClick={ () => loginEmailPass(email.value, password.value)}>Login</button>
+          <button type="button" className="btn btn-default" onClick={ () => location.href = 'http://localhost:3030/login/facebook'} >
             <i className="fa fa-facebook"/> {' '} Facebook login
           </button>
-          <button className="btn btn-default" >
+          <button type="button" className="btn btn-default" onClick={ () => location.href = 'http://localhost:3030/login/facebook'} >
             <i className="fa fa-google"/> {' '} Google login
           </button>
       </form>

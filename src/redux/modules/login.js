@@ -1,12 +1,10 @@
 const LOGIN = 'around/auth/LOGIN';
 const LOGIN_SUCCESS = 'around/auth/LOGIN_SUCCESS';
 const LOGIN_FAIL = 'around/auth/LOGIN_FAIL';
-const LOGOUT = 'around/auth/LOGOUT'
-const initialState = {
-  loaded: false
-};
+const LOGOUT = 'around/auth/LOGOUT';
 
-export default function reducer(state = initialState, action = {}) {
+
+export default function reducer(state = {}, action = {}) {
   switch (action.type) {
     case LOGIN:
       return {
@@ -36,28 +34,10 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-export function isLoaded(globalState) {
-  return globalState.auth && globalState.auth.loaded;
-}
-
-export function logginFacebook() {
-  return {
-    types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.get('/login/facebook')
-  }
-}
-
-export function logginGoogle() {
-  return {
-    types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.get('/login/google')
-  }
-}
-
 export function loginEmailPass(email, password) {
   return {
     types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.post('/login', {
+    promise: (client) => client.post('/login/local', {
       data: {
         email: email,
         password: password
@@ -69,5 +49,5 @@ export function loginEmailPass(email, password) {
 export function logout() {
   return {
     type: [LOGOUT]
-  }
+  };
 }
