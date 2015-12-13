@@ -7,11 +7,11 @@ import * as usersActions from 'redux/modules/users';
 import {isLoaded, load as loadUsers} from 'redux/modules/users';
 import connectData from 'helpers/connectData';
 import {connect} from 'react-redux';
+import {LoginForm} from 'components';
 
 
 function fetchDataDeferred(getState, dispatch) {
   if (!isLoaded(getState())) {
-    //console.log('LOAD');
     return dispatch(loadUsers());
   }
 }
@@ -27,13 +27,13 @@ export default class User extends Component {
     users: PropTypes.array
   }
   render() {
-    //console.log('Bravo');
     const { users } = this.props;
-    //console.log(this.props);
 
     // const styles = require('./User.scss');
 
     return (
+      <div>
+      <LoginForm/>
       <Jumbotron>
         {
           users.map((user) =>
@@ -42,6 +42,7 @@ export default class User extends Component {
           </Panel>)
         }
       </Jumbotron>
+      </div>
     );
   }
 }

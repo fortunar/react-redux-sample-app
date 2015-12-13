@@ -46,7 +46,7 @@ describe('InfoBar', () => {
   });
 
   it('should render the correct className', () => {
-    const styles = require('components/InfoBar/InfoBar.scss');
+    const styles = require('components/InfoBar/LoginForm.scss');
     expect(styles.infoBar).to.be.a('string');
     expect(dom.className).to.include(styles.infoBar);
   });
