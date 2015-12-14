@@ -9,6 +9,8 @@ import { pushState } from 'redux-router';
 import connectData from 'helpers/connectData';
 import config from '../../config';
 
+import {Notifs} from 're-notif';
+
 function fetchData() {
   const promises = [];
   /*
@@ -41,16 +43,27 @@ export default class App extends Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.user && nextProps.user) {
       // login
-      this.props.pushState(null, '/loginSuccess');
+
     } else if (this.props.user && !nextProps.user) {
       // logout
       this.props.pushState(null, '/');
     }
   }
 
+
+
   render() {
     const styles = require('./App.scss');
     // console.log(this.props);
+
+    let theme = {
+        defaultClasses: 'alert',
+        successClasses: 'alert-success',
+        infoClasses: 'alert-info',
+        warningClasses: 'alert-warning',
+        dangerClasses: 'alert-danger'
+    }
+
     return (
       <div className={styles.app}>
         <DocumentMeta {...config.app}/>
@@ -76,6 +89,9 @@ export default class App extends Component {
         </Navbar>
 
         <div className={styles.appContent}>
+        <div className={styles.notifContainer}>
+          <Notifs theme={theme}/>
+        </div>
           {this.props.children}
         </div>
 

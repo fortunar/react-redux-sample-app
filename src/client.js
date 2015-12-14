@@ -14,6 +14,9 @@ import {reduxReactRouter, ReduxRouter} from 'redux-router';
 import getRoutes from './routes';
 import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
 
+/* External (global) css libraries. */
+import 're-notif/lib/re-notif.css';
+
 const client = new ApiClient();
 
 // Three different types of scroll behavior available.

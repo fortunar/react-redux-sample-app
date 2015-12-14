@@ -2,12 +2,12 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
-import * as loginActions from 'redux/modules/login';
+import * as authActions from 'redux/modules/auth';
 
 
 @connect(
     () => ({}),
-    dispatch => bindActionCreators(loginActions, dispatch))
+    dispatch => bindActionCreators(authActions, dispatch))
 @reduxForm({
   form: 'login',
   fields: ['email', 'password']
@@ -40,7 +40,7 @@ export default class LoginForm extends Component {
           <button type="button" className="btn btn-default" onClick={ () => location.href = 'http://localhost:3030/login/facebook'} >
             <i className="fa fa-facebook"/> {' '} Facebook login
           </button>
-          <button type="button" className="btn btn-default" onClick={ () => location.href = 'http://localhost:3030/login/facebook'} >
+          <button type="button" className="btn btn-default" onClick={ () => location.href = 'http://localhost:3030/login/google'} >
             <i className="fa fa-google"/> {' '} Google login
           </button>
       </form>

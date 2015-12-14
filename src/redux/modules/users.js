@@ -13,6 +13,7 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD:
       return {
         ...state,
+        data: [],
         loading: true
       };
     case LOAD_SUCCESS:
