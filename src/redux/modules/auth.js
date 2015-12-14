@@ -13,10 +13,12 @@ export default function reducer(state = {}, action = {}) {
         loggingIn: true
       };
     case LOGIN_SUCCESS:
+      const data = cookie.load('aroundSlo');
       return {
         ...state,
         loggingIn: false,
-        user: cookie.load('user')
+        user: data.user,
+        token: data.token
       };
     case LOGIN_FAIL:
       return {
@@ -26,28 +28,26 @@ export default function reducer(state = {}, action = {}) {
         loginError: action.error
       };
     case LOGOUT:
+      cookie.remove('aroundSlo');
       return {
         ...state,
-        user: null
+        user: null,
+        token: null
       };
     default:
       return state;
   }
 }
 
-export function loginFacebook() {
-  return {
-    types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-    promise: (client) => client.get('/login/facebook')
-  };
+export function isLogedIn(globalState) {
+  return globalState.auth.user;
 }
 
-// export function loginGoogle() {
-//  return {
-//    types: [LOGIN, LOGIN_SUCCESS, LOGIN_FAIL],
-//    promise: (client) => client.get('/login/google')
-//  };
-// }
+export function updateUserData() {
+  return {
+    type: LOGIN_SUCCESS
+  };
+}
 
 export function loginEmailPass(email, password) {
   return {
@@ -63,6 +63,6 @@ export function loginEmailPass(email, password) {
 
 export function logout() {
   return {
-    type: [LOGOUT]
+    type: LOGOUT
   };
 }

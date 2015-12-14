@@ -4,12 +4,14 @@ import { IndexLink } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, NavBrand, Nav, NavItem, CollapsibleNav } from 'react-bootstrap';
 import DocumentMeta from 'react-document-meta';
-import { logout } from 'redux/modules/auth';
-import { pushState } from 'redux-router';
+import * as authActions from 'redux/modules/auth';
 import connectData from 'helpers/connectData';
 import config from '../../config';
+import {bindActionCreators} from 'redux';
+
 
 import {Notifs} from 're-notif';
+import reactCookie from 'react-cookie';
 
 function fetchData() {
   const promises = [];
@@ -27,42 +29,41 @@ function fetchData() {
 @connectData(fetchData)
 @connect(
   state => ({user: state.auth.user}),
-  {logout, pushState})
+  dispatch => bindActionCreators(authActions, dispatch))
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     user: PropTypes.object,
     logout: PropTypes.func.isRequired,
-    pushState: PropTypes.func.isRequired
+    updateUserData: PropTypes.func.isRequired,
   };
 
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
 
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.user && nextProps.user) {
-      // login
 
-    } else if (this.props.user && !nextProps.user) {
-      // logout
-      this.props.pushState(null, '/');
+  componentWillMount() {
+    const { updateUserData } = this.props;
+    const cookie = reactCookie.load('aroundSlo');
+    if (cookie) {
+      updateUserData();
     }
   }
 
 
-
   render() {
     const styles = require('./App.scss');
+    const {user, logout} = this.props;
     // console.log(this.props);
 
-    let theme = {
-        defaultClasses: 'alert',
-        successClasses: 'alert-success',
-        infoClasses: 'alert-info',
-        warningClasses: 'alert-warning',
-        dangerClasses: 'alert-danger'
-    }
+    const theme = {
+      defaultClasses: 'alert',
+      successClasses: 'alert-success',
+      infoClasses: 'alert-info',
+      warningClasses: 'alert-warning',
+      dangerClasses: 'alert-danger'
+    };
 
     return (
       <div className={styles.app}>
@@ -71,17 +72,26 @@ export default class App extends Component {
           <NavBrand>
             <IndexLink to="/" activeStyle={{color: '#33e0ff'}}>
               <div className={styles.brand}/>
-              <span>Title</span>
+              <span>AroundSlo</span>
             </IndexLink>
           </NavBrand>
 
 
           <CollapsibleNav eventKey={0}>
-            <Nav navbar>
-
+            <Nav navbar right>
+              {user &&
               <LinkContainer to="/users">
-                <NavItem eventKey={2}>Users</NavItem>
-              </LinkContainer>
+                <NavItem eventKey={2}>{user.name} {user.surname}</NavItem>
+              </LinkContainer>}
+
+              {user &&
+              <NavItem eventKey={2} onClick={ (event) => {event.preventDefault(); logout();}}>Logout</NavItem>}
+
+
+              {!user &&
+              <LinkContainer to="/login">
+                <NavItem eventKey={2}>Login</NavItem>
+              </LinkContainer>}
 
             </Nav>
 
