@@ -9,9 +9,7 @@ import connectData from 'helpers/connectData';
 import config from '../../config';
 import {bindActionCreators} from 'redux';
 
-
 import {Notifs} from 're-notif';
-import reactCookie from 'react-cookie';
 
 function fetchData() {
   const promises = [];
@@ -28,12 +26,12 @@ function fetchData() {
 
 @connectData(fetchData)
 @connect(
-  state => ({user: state.auth.user}),
+  state => ({auth: state.auth}),
   dispatch => bindActionCreators(authActions, dispatch))
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
-    user: PropTypes.object,
+    auth: PropTypes.object,
     logout: PropTypes.func.isRequired,
     updateUserData: PropTypes.func.isRequired,
   };
@@ -42,20 +40,12 @@ export default class App extends Component {
     store: PropTypes.object.isRequired
   };
 
-
-  componentWillMount() {
-    const { updateUserData } = this.props;
-    const cookie = reactCookie.load('aroundSlo');
-    if (cookie) {
-      updateUserData();
-    }
-  }
-
-
   render() {
+    console.log('APP RENDER!');
     const styles = require('./App.scss');
-    const {user, logout} = this.props;
-    // console.log(this.props);
+    const {auth, logout} = this.props;
+//  console.log(user);
+//  console.log(this.props);
 
     const theme = {
       defaultClasses: 'alert',
@@ -79,16 +69,16 @@ export default class App extends Component {
 
           <CollapsibleNav eventKey={0}>
             <Nav navbar right>
-              {user &&
+              {auth.userId &&
               <LinkContainer to="/users">
-                <NavItem eventKey={2}>{user.name} {user.surname}</NavItem>
+                <NavItem eventKey={2}>{auth.userId} </NavItem>
               </LinkContainer>}
 
-              {user &&
+              {auth.userId &&
               <NavItem eventKey={2} onClick={ (event) => {event.preventDefault(); logout();}}>Logout</NavItem>}
 
 
-              {!user &&
+              {!auth.userId &&
               <LinkContainer to="/login">
                 <NavItem eventKey={2}>Login</NavItem>
               </LinkContainer>}

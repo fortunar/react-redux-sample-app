@@ -19,6 +19,8 @@ import {Provider} from 'react-redux';
 import qs from 'query-string';
 import getRoutes from './routes';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
+import {updateUserData} from './redux/modules/auth';
+import Cookies from 'cookies';
 
 const pretty = new PrettyError();
 const app = new Express();
@@ -69,6 +71,17 @@ app.use((req, res) => {
   if (__DISABLE_SSR__) {
     hydrateOnClient();
     return;
+  }
+
+
+  const cookies = new Cookies(req, res);
+  const cookieToken = cookies.get('around_token');
+  const cookieUserId = cookies.get('around_user_id');
+  console.log("COOKIE DATA");
+  console.log(cookieToken);
+  console.log(cookieUserId);
+  if (cookieToken && cookieUserId) {
+    store.dispatch(updateUserData(cookieToken, cookieUserId));
   }
 
   store.dispatch(match(req.originalUrl, (error, redirectLocation, routerState) => {
