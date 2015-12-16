@@ -1,10 +1,11 @@
 /**
  * Created by rokfortuna on 12/15/15.
  */
+import {LOGOUT} from './auth';
+
 const LOAD = 'around/user/LOAD';
 const LOAD_SUCCESS = 'around/user/LOAD_SUCCESS';
 const LOAD_FAIL = 'around/user/LOAD_FAIL';
-const LOGOUT = 'around/user/LOGOUT';
 
 export default function reducer(state = {loaded: false}, action = {}) {
   switch (action.type) {
@@ -45,19 +46,13 @@ export default function reducer(state = {loaded: false}, action = {}) {
 }
 
 export function isLoaded(globalState) {
-  return globalState.user.loaded;
+  return globalState.auth.user.loaded;
 }
 
 export function load(userId) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     promise: (client) => client.get(`/users/${userId}`) // params not used, just shown as demonstration
-  };
-}
-
-export function logout() {
-  return {
-    types: LOGOUT
   };
 }
 

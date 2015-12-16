@@ -41,10 +41,10 @@ export function isLoaded(globalState) {
   return globalState.users && globalState.users.loaded;
 }
 
-export function load() {
+export function load(globalState) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get('/users') // params not used, just shown as demonstration
+    promise: (client) => client.get('/users', {token: globalState.auth.login.token}) // params not used, just shown as demonstration
   };
 }
 

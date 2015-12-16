@@ -2,12 +2,12 @@ import React, {Component, PropTypes} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {reduxForm} from 'redux-form';
-import * as authActions from 'redux/modules/auth';
+import * as loginActions from 'redux/modules/auth/login';
 
 
 @connect(
     () => ({}),
-    dispatch => bindActionCreators(authActions, dispatch))
+    dispatch => bindActionCreators(loginActions, dispatch))
 @reduxForm({
   form: 'login',
   fields: ['email', 'password']

@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 
 function fetchDataDeferred(getState, dispatch) {
   if (!isLoaded(getState())) {
-    return dispatch(loadUsers());
+    return dispatch(loadUsers(getState()));
   }
 }
 

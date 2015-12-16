@@ -22,11 +22,15 @@ function formatUrl(path) {
 class _ApiClient {
   constructor(req) {
     methods.forEach((method) =>
-      this[method] = (path, { params, data } = {}) => new Promise((resolve, reject) => {
+      this[method] = (path, { params, data, token } = {}) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
 
         if (params) {
           request.query(params);
+        }
+
+        if (token) {
+          request.set('Token', token);
         }
 
         if (__SERVER__ && req.get('cookie')) {

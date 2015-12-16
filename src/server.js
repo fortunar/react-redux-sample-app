@@ -19,7 +19,7 @@ import {Provider} from 'react-redux';
 import qs from 'query-string';
 import getRoutes from './routes';
 import getStatusFromRoutes from './helpers/getStatusFromRoutes';
-import {updateUserData} from './redux/modules/auth';
+import {updateUserData} from './redux/modules/auth/login';
 import Cookies from 'cookies';
 
 const pretty = new PrettyError();

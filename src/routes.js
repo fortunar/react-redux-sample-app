@@ -11,7 +11,7 @@ import {
 export default (store) => {
 
   const checkAuth = () => {
-    const { auth: { token }} = store.getState();
+    const { auth: { login: { token } } } = store.getState();
     return token;
   };
 

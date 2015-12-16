@@ -1,10 +1,10 @@
 import cookie from 'react-cookie';
+import {LOGOUT} from './auth';
 
 const LOGIN = 'around/auth/LOGIN';
 const LOGIN_SUCCESS = 'around/auth/LOGIN_SUCCESS';
 const LOGIN_SUCCESS_REDIRECT = 'around/auth/LOGIN_SUCCESS_REDIRECT';
 const LOGIN_FAIL = 'around/auth/LOGIN_FAIL';
-const LOGOUT = 'around/auth/LOGOUT';
 
 export default function reducer(state = {}, action = {}) {
   switch (action.type) {
@@ -51,7 +51,7 @@ export default function reducer(state = {}, action = {}) {
 }
 
 export function isLoggedIn(globalState) {
-  return globalState.auth.userId;
+  return globalState.auth.login.userId;
 }
 
 export function updateUserData(cookieToken, cookieUserId) {
@@ -70,11 +70,5 @@ export function loginEmailPass(email, password) {
         password: password
       }
     })
-  };
-}
-
-export function logout() {
-  return {
-    type: LOGOUT
   };
 }
