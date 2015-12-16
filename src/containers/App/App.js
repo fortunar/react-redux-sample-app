@@ -4,7 +4,7 @@ import { IndexLink } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, NavBrand, Nav, NavItem, CollapsibleNav } from 'react-bootstrap';
 import DocumentMeta from 'react-document-meta';
-import authActions from 'redux/modules/auth/auth';
+import * as authActions from 'redux/modules/auth/auth';
 import connectData from 'helpers/connectData';
 import config from '../../config';
 import {bindActionCreators} from 'redux';
