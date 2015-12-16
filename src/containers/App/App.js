@@ -4,36 +4,40 @@ import { IndexLink } from 'react-router';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Navbar, NavBrand, Nav, NavItem, CollapsibleNav } from 'react-bootstrap';
 import DocumentMeta from 'react-document-meta';
-import * as authActions from 'redux/modules/auth';
+import {logout as logoutAuth} from 'redux/modules/auth';
+import {logout as logoutUser} from 'redux/modules/user';
 import connectData from 'helpers/connectData';
 import config from '../../config';
 import {bindActionCreators} from 'redux';
 
+import {isLoaded as isUserDataLoaded, load as loadUserData} from 'redux/modules/user';
+import {isLoggedIn} from 'redux/modules/auth';
+
 import {Notifs} from 're-notif';
 
-function fetchData() {
+function fetchData(getState, dispatch) {
   const promises = [];
-  /*
-  if (!isInfoLoaded(getState())) {
-    promises.push(dispatch(loadInfo()));
+
+  // TODO make this code prettier
+  if (!isUserDataLoaded(getState()) && isLoggedIn(getState())) {
+    promises.push(dispatch(loadUserData(getState().auth.userId)));
   }
-  if (!isAuthLoaded(getState())) {
-    promises.push(dispatch(loadAuth()));
-  }
-  */
+
   return Promise.all(promises);
 }
 
 @connectData(fetchData)
 @connect(
-  state => ({auth: state.auth}),
-  dispatch => bindActionCreators(authActions, dispatch))
+  state => ({auth: state.auth,
+            user: state.user}),
+  dispatch => bindActionCreators({logoutAuth, logoutUser}, dispatch))
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     auth: PropTypes.object,
-    logout: PropTypes.func.isRequired,
-    updateUserData: PropTypes.func.isRequired,
+    user: PropTypes.object,
+    logoutAuth: PropTypes.func.isRequired,
+    logoutUser: PropTypes.func.isRequired
   };
 
   static contextTypes = {
@@ -43,7 +47,7 @@ export default class App extends Component {
   render() {
     console.log('APP RENDER!');
     const styles = require('./App.scss');
-    const {auth, logout} = this.props;
+    const {auth, logoutAuth, logoutUser, user} = this.props;
 //  console.log(user);
 //  console.log(this.props);
 
@@ -69,13 +73,14 @@ export default class App extends Component {
 
           <CollapsibleNav eventKey={0}>
             <Nav navbar right>
-              {auth.userId &&
+              {user.name &&
               <LinkContainer to="/users">
-                <NavItem eventKey={2}>{auth.userId} </NavItem>
-              </LinkContainer>}
+                <NavItem eventKey={2}>{user.name} {user.surname}</NavItem>
+              </LinkContainer>
+              }
 
               {auth.userId &&
-              <NavItem eventKey={2} onClick={ (event) => {event.preventDefault(); logout();}}>Logout</NavItem>}
+              <NavItem eventKey={2} onClick={ (event) => {event.preventDefault(); logoutAuth(); logoutUser();}}>Logout</NavItem>}
 
 
               {!auth.userId &&

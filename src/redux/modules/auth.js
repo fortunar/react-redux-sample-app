@@ -37,10 +37,12 @@ export default function reducer(state = {}, action = {}) {
         loginError: action.error
       };
     case LOGOUT:
-      cookie.remove('aroundSlo');
+      console.log('AUTH LOGOUT');
+      cookie.remove('around_token');
+      cookie.remove('around_user_id');
       return {
         ...state,
-        user: null,
+        userId: null,
         token: null
       };
     default:
@@ -48,8 +50,8 @@ export default function reducer(state = {}, action = {}) {
   }
 }
 
-export function isLogedIn(globalState) {
-  return globalState.auth.user;
+export function isLoggedIn(globalState) {
+  return globalState.auth.userId;
 }
 
 export function updateUserData(cookieToken, cookieUserId) {

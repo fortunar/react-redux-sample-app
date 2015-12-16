@@ -74,12 +74,13 @@ app.use((req, res) => {
   }
 
 
+  // handling authentication via cookies
   const cookies = new Cookies(req, res);
   const cookieToken = cookies.get('around_token');
   const cookieUserId = cookies.get('around_user_id');
   console.log("COOKIE DATA");
-  console.log(cookieToken);
-  console.log(cookieUserId);
+//  console.log(cookieToken);
+//  console.log(cookieUserId);
   if (cookieToken && cookieUserId) {
     store.dispatch(updateUserData(cookieToken, cookieUserId));
   }
