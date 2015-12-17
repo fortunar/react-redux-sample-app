@@ -13,6 +13,7 @@ import {isLoaded as isUserDataLoaded, load as loadUserData} from 'redux/modules/
 import {isLoggedIn} from 'redux/modules/auth/login';
 
 import {Notifs} from 're-notif';
+import {actions as notifActions } from 're-notif';
 
 function fetchData(getState, dispatch) {
   const promises = [];
@@ -29,23 +30,25 @@ function fetchData(getState, dispatch) {
 @connect(
   state => ({login: state.auth.login,
             user: state.auth.user}),
-  dispatch => bindActionCreators(authActions, dispatch))
+  dispatch => bindActionCreators({...authActions, ...notifActions }, dispatch))
 export default class App extends Component {
   static propTypes = {
     children: PropTypes.object.isRequired,
     login: PropTypes.object,
     user: PropTypes.object,
     logout: PropTypes.func.isRequired,
+    notifSend: PropTypes.func.isRequired
   };
 
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
 
+
   render() {
     console.log('APP RENDER!');
     const styles = require('./App.scss');
-    const {login, logout, user} = this.props;
+    const {login, logout, user, notifSend} = this.props;
 //  console.log(user);
 //  console.log(this.props);
 
@@ -55,6 +58,12 @@ export default class App extends Component {
       infoClasses: 'alert-info',
       warningClasses: 'alert-warning',
       dangerClasses: 'alert-danger'
+    };
+
+    const handleLogoutClick = (event) => {
+      event.preventDefault();
+      logout();
+      notifSend({message: 'Logged out.', kind: 'warning', dismissAfter: 2000});
     };
 
     return (
@@ -78,7 +87,7 @@ export default class App extends Component {
               }
 
               {login.userId &&
-              <NavItem eventKey={2} onClick={ (event) => {event.preventDefault(); logout();}}>Logout</NavItem>}
+              <NavItem eventKey={2} onClick={ (event) => {handleLogoutClick(event); }}>Logout</NavItem>}
 
 
               {!login.userId &&

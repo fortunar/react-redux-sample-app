@@ -14,13 +14,14 @@ export default function reducer(state = {}, action = {}) {
         loggingIn: true
       };
     case LOGIN_SUCCESS:
-      // TODO throw cookie out
-      const data = cookie.load('aroundSlo');
+      console.log('LOGIN SUCCESS');
+      console.log(action);
       return {
         ...state,
         loggingIn: false,
-        user: data.user,
-        token: data.token
+        loginError: null,
+        userId: cookie.load('around_user_id'),
+        token: cookie.load('around_token')
       };
     case LOGIN_SUCCESS_REDIRECT:
       return {
@@ -30,11 +31,13 @@ export default function reducer(state = {}, action = {}) {
         token: action.data.token
       };
     case LOGIN_FAIL:
+      console.log('LOGIN FAIL');
+      console.log(action);
       return {
         ...state,
         loggingIn: false,
         user: null,
-        loginError: action.error
+        loginError: action.error.message
       };
     case LOGOUT:
       console.log('AUTH LOGOUT');
