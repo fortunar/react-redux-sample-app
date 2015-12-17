@@ -5,7 +5,8 @@ import {
     Home,
     User,
     Login,
-    NotFound
+    NotFound,
+    NotAuthorized
   } from 'containers';
 
 export default (store) => {
@@ -49,6 +50,9 @@ export default (store) => {
       </Route>
 
       { /* routes */}
+
+      { /* not authorized */ }
+      <Route path="/notAuthorized" component={NotAuthorized} status={401} />
 
       { /* Catch all route */ }
       <Route path="*" component={NotFound} status={404} />

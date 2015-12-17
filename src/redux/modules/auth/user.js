@@ -16,7 +16,6 @@ export default function reducer(state = {loaded: false}, action = {}) {
       };
     case LOAD_SUCCESS:
       console.log('USER INFO SUCCESS');
-//      console.log(action.result);
       return {
         ...state,
         loaded: true,
