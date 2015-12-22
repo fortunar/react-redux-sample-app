@@ -36,13 +36,13 @@ export default class User extends Component {
   componentWillMount() {
     const {replaceState} = this.props;
 
-    if (props.error) {
+    if (this.props.error) {
       replaceState(null, '/notAuthorized');
     }
 
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentWillUpdate(nextProps) {
     const {replaceState} = nextProps;
 
     if (nextProps.error) {
