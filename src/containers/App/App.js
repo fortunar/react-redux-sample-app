@@ -46,7 +46,7 @@ export default class App extends Component {
 
 
   render() {
-    console.log('APP RENDER!');
+//    console.log('APP RENDER!');
     const styles = require('./App.scss');
     const {login, logout, user, notifSend} = this.props;
 //  console.log(user);
@@ -77,8 +77,8 @@ export default class App extends Component {
             </IndexLink>
           </NavBrand>
 
-
           <CollapsibleNav eventKey={0}>
+
             <Nav navbar right>
               {user &&
               <LinkContainer to="/users">

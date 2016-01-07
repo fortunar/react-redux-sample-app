@@ -2,9 +2,9 @@ import React from 'react';
 import {IndexRoute, Route} from 'react-router';
 import {
     App,
-    Home,
     User,
     Login,
+    Transports,
     NotFound,
     NotAuthorized
   } from 'containers';
@@ -37,19 +37,18 @@ export default (store) => {
 
     <Route path="/" component={App}>
       { /* Home (main) route */ }
-      <IndexRoute component={Home}/>
+      <IndexRoute component={Transports}/>
 
       { /* Routes requiring login */ }
       <Route onEnter={requireLogin}>
         <Route path="users" component={User}/>
       </Route>
 
+
       { /* Routes requiring being logout */ }
       <Route onEnter={requireLogout}>
         <Route path="login" component={Login}/>
       </Route>
-
-      { /* routes */}
 
       { /* not authorized */ }
       <Route path="/notAuthorized" component={NotAuthorized} status={401} />

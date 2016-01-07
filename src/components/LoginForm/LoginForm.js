@@ -36,7 +36,7 @@ export default class LoginForm extends Component {
 
   render() {
     const {fields: {email, password}, loginEmailPass, auth} = this.props;
-    // const styles = require('./LoginForm.scss');
+    // const styles = require('./TransportsGrid.scss');
     return (
       <form role="form" onSubmit={this.handleSubmit}>
           <div className="form-group">
