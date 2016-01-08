@@ -14,6 +14,7 @@ import * as routerActions from 'redux-router';
   fields: ['email', 'password']
 })
 export default class LoginForm extends Component {
+
   static propTypes = {
     loginEmailPass: PropTypes.func.isRequired,
     fields: PropTypes.object.isRequired,
@@ -61,8 +62,6 @@ export default class LoginForm extends Component {
           <button type="button" className="btn btn-default" onClick={ () => location.href = 'http://localhost:3030/login/google'} >
             <i className="fa fa-google"/> {' '} Google login
           </button>
-
-
       </form>
     );
   }

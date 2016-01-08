@@ -48,10 +48,11 @@ export function isLoaded(globalState) {
   return globalState.auth.user.loaded;
 }
 
-export function load(userId) {
+export function load(userId, globalState) {
+
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: (client) => client.get(`/users/${userId}`)
+    promise: (client) => client.get(`/users/${userId}`, {token: globalState.auth.login.token})
   };
 }
 

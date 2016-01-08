@@ -17,10 +17,9 @@ import {actions as notifActions } from 're-notif';
 
 function fetchData(getState, dispatch) {
   const promises = [];
-
   // TODO make this code prettier
   if (!isUserDataLoaded(getState()) && isLoggedIn(getState())) {
-    promises.push(dispatch(loadUserData(getState().auth.login.userId)));
+    promises.push(dispatch(loadUserData(getState().auth.login.userId, getState())));
   }
 
   return Promise.all(promises);
@@ -81,7 +80,7 @@ export default class App extends Component {
           <CollapsibleNav eventKey={0}>
             <Nav navbar right>
               {user &&
-              <LinkContainer to="/users">
+              <LinkContainer to="/user">
                 <NavItem eventKey={2}>{user.name} {user.surname}</NavItem>
               </LinkContainer>
               }

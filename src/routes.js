@@ -5,6 +5,7 @@ import {
     Home,
     User,
     Login,
+    Transport,
     NotFound,
     NotAuthorized
   } from 'containers';
@@ -39,9 +40,13 @@ export default (store) => {
       { /* Home (main) route */ }
       <IndexRoute component={Home}/>
 
+      <Route>
+        <Route path="transports/:transportId" component={Transport}/>
+      </Route>
+
       { /* Routes requiring login */ }
       <Route onEnter={requireLogin}>
-        <Route path="users" component={User}/>
+        <Route path="user" component={User}/>
       </Route>
 
       { /* Routes requiring being logout */ }

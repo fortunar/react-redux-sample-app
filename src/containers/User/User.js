@@ -55,9 +55,12 @@ export default class User extends Component {
     const { users } = this.props;
     return (
      <Jumbotron>
-      {
-
-      }
+       {
+         users.map((user) =>
+           <Panel>
+             {user.name} {user.surname}
+           </Panel>)
+       }
      </Jumbotron>
     );
   }
