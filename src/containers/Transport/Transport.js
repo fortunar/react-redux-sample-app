@@ -7,7 +7,7 @@ import connectData from 'helpers/connectData';
 import {connect} from 'react-redux';
 import * as routerActions from 'redux-router';
 import {bindActionCreators} from 'redux';
-import {isOneLoaded as isTransportLoaded, loadOne as loadOneTransport} from 'redux/modules/transports'
+import {isOneLoaded as isTransportLoaded, loadOne as loadOneTransport} from 'redux/modules/transports';
 
 function fetchDataDeferred(getState, dispatch) {
   if (!isTransportLoaded(getState())) {
@@ -31,7 +31,7 @@ export default class Transport extends Component {
   }
 
   render() {
-    const { transports, params: {transportId} } = this.props;
+    const { transports } = this.props;
     return (
       <Jumbotron>
         {

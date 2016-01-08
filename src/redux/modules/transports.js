@@ -1,9 +1,14 @@
 const LOAD_ONE = 'around/transport/LOAD';
 const LOAD_ONE_SUCCESS = 'around/transport/LOAD_SUCCESS';
 const LOAD_ONE_FAIL = 'around/transport/LOAD_FAIL';
+const LOAD = 'around/transports/LOAD';
+const LOAD_SUCCESS = 'around/transports/LOAD_SUCCESS';
+const LOAD_FAIL = 'around/transports/LOAD_FAIL';
 
 const initialState = {
-  loading: false,
+  loaded: false,
+  editing: {},
+  saveError: {},
   data: []
 };
 
@@ -15,8 +20,6 @@ export default function reducer(state = initialState, action = {}) {
         loading: true
       };
     case LOAD_ONE_SUCCESS:
-      console.log("SUCCESS");
-      console.log(action);
       return {
         ...state,
         loading: false,
@@ -24,11 +27,32 @@ export default function reducer(state = initialState, action = {}) {
         error: null
       };
     case LOAD_ONE_FAIL:
-      console.log("ERROR");
       return {
         ...state,
         loading: false,
         data: state.data,
+        error: action.error
+      };
+    case LOAD:
+      return {
+        ...state,
+        data: [],
+        loading: true
+      };
+    case LOAD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        data: action.result,
+        error: null
+      };
+    case LOAD_FAIL:
+      return {
+        ...state,
+        loading: false,
+        loaded: false,
+        data: [],
         error: action.error
       };
     default:
@@ -37,13 +61,12 @@ export default function reducer(state = initialState, action = {}) {
 }
 
 export function isOneLoaded(globalState) {
-  return globalState.transports.data.find(t => {
-    if(t.idTransport == globalState.router.params.transportId) {
-      return t;
-    } else {
-      return false;
+  return globalState.transports.data.find(transport => {
+    if (transport.idTransport === globalState.router.params.transportId) {
+      return transport;
     }
-  })
+    return false;
+  });
 }
 
 export function loadOne(globalState) {
@@ -54,3 +77,14 @@ export function loadOne(globalState) {
   };
 }
 
+export function isLoaded(globalState) {
+  return globalState.transports && globalState.transports.loaded;
+}
+
+// put globalState as parameters
+export function load() {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: (client) => client.get('/transports', {})
+  };
+}
