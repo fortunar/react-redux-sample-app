@@ -56,10 +56,7 @@ export default class User extends Component {
     return (
      <Jumbotron>
       {
-        users.map((user) =>
-          <Panel>
-            {user.name} {user.surname}
-          </Panel>)
+
       }
      </Jumbotron>
     );
