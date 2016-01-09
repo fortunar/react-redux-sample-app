@@ -25,7 +25,9 @@ function fetchDataDeferred(getState, dispatch) {
 export default class Transports extends Component {
 
   static propTypes = {
-    transports: PropTypes.array
+    transports: PropTypes.array,
+    history: PropTypes.object,
+    pushState: PropTypes.func.isRequired
   }
 
   componentDidMount() {
@@ -34,9 +36,13 @@ export default class Transports extends Component {
 
 
   render() {
-    const { transports } = this.props;
+    const { transports, history : {pushState} } = this.props;
+    console.log(this.props);
+    const onTransportClick = (transportId) => {
+      pushState(null, `/transports/${transportId}`, '');
+    };
     return (
-      <TransportsGrid transports={transports} />
+      <TransportsGrid transports={transports} onTransportClick={onTransportClick} />
     );
   }
 

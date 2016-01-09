@@ -62,7 +62,7 @@ export default function reducer(state = initialState, action = {}) {
 
 export function isOneLoaded(globalState) {
   return globalState.transports.data.find(transport => {
-    if (transport.idTransport === globalState.router.params.transportId) {
+    if (transport.idTransport == globalState.router.params.transportId) {
       return transport;
     }
     return false;

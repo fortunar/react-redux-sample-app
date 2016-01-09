@@ -1,20 +1,15 @@
 import React, {Component, PropTypes} from 'react';
-// import {connect} from 'react-redux';
-// import {bindActionCreators} from 'redux';
-// import {reduxForm} from 'redux-form';
-// import * as loginActions from 'redux/modules/auth/login';
-// import { Alert } from 'react-bootstrap';
-// import * as routerActions from 'redux-router';
 import {Table, Tr, Td, Thead, Th} from 'reactable';
 
 
 export default class TransportsGrid extends Component {
   static propTypes = {
-    transports: PropTypes.array.isRequired
+    transports: PropTypes.array.isRequired,
+    onTransportClick: PropTypes.func.isRequired
   };
 
   render() {
-    const {transports} = this.props;
+    const {transports, onTransportClick} = this.props;
     // const styles = require('./TransportsGrid.scss');
     return (
       <Table className="table"
@@ -47,30 +42,30 @@ export default class TransportsGrid extends Component {
         {
           transports.map(
             (transport) =>
-
-            <Tr>
-              <Td column="ArrivalPlace">
-                {transport.arrivalPlace.city}
-              </Td>
-              <Td column="DeparturePlace">
-                {transport.departurePlace.city}
-              </Td>
-              <Td column="DepartureDate">
-                {transport.departureTime}
-              </Td>
-              <Td column="DepartureTime">
-                {transport.departureTime}
-              </Td>
-              <Td column="Price">
-                {`${transport.price} ${transport.currency.symbol}`}
-              </Td>
-              <Td column="Driver">
-                {transport.user.name}
-              </Td>
-              <Td column="Phone">
-                {transport.user.mobile}
-              </Td>
-            </Tr>)
+              <Tr onClick={() => onTransportClick(transport.idTransport)}>
+                <Td column="ArrivalPlace">
+                  {transport.arrivalPlace.city}
+                </Td>
+                <Td column="DeparturePlace">
+                  {transport.departurePlace.city}
+                </Td>
+                <Td column="DepartureDate">
+                  {transport.departureTime}
+                </Td>
+                <Td column="DepartureTime">
+                  {transport.departureTime}
+                </Td>
+                <Td column="Price">
+                  {`${transport.price} ${transport.currency.symbol}`}
+                </Td>
+                <Td column="Driver">
+                  {transport.user.name}
+                </Td>
+                <Td column="Phone">
+                  {transport.user.mobile}
+                </Td>
+              </Tr>
+            )
         }
       </Table>
     );
