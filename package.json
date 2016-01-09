@@ -128,6 +128,7 @@
     "phantomjs-polyfill": "0.0.1",
     "react-a11y": "^0.2.6",
     "react-addons-test-utils": "^0.14.0",
+    "react-intl": "^1.2.2",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
     "reactable": "^0.12.1",

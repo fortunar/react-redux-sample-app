@@ -42,7 +42,7 @@ export default class TransportsGrid extends Component {
         {
           transports.map(
             (transport) =>
-              <Tr onClick={() => onTransportClick(transport.idTransport)}>
+              <Tr onClick={() => onTransportClick(transport.idTransport)} key={transport.idTransport}>
                 <Td column="ArrivalPlace">
                   {transport.arrivalPlace.city}
                 </Td>

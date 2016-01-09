@@ -2,7 +2,7 @@ import React, {Component, PropTypes} from 'react';
 import { Panel, Jumbotron } from 'react-bootstrap';
 
 
-export default class TransportsDetails extends Component {
+export default class TransportDetails extends Component {
   static propTypes = {
     transport: PropTypes.object
   }

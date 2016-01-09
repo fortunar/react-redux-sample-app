@@ -30,13 +30,8 @@ export default class Transports extends Component {
     pushState: PropTypes.func.isRequired
   }
 
-  componentDidMount() {
-    console.log('Transports loaded.');
-  }
-
-
   render() {
-    const { transports, history : {pushState} } = this.props;
+    const { transports, history: {pushState} } = this.props;
     console.log(this.props);
     const onTransportClick = (transportId) => {
       pushState(null, `/transports/${transportId}`, '');
